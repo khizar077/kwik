@@ -33,7 +33,7 @@ systemctl stop firewalld
 
 ## Container Runtime
 1. Install Docker on each node (https://docs.docker.com/engine/install/centos/)
-- On each node perform the following:
+On **each** node perform the following:
 
 ```
 yum install -y yum-utils
@@ -48,7 +48,7 @@ docker run -it centos
 hostname
 exit
 ```
-- Verify that it gives you back a hostname different than the node you're on (should be a randomly generated one from Docker)
+Verify that it gives you back a hostname different than the node you're on (should be a randomly generated one from Docker)
 
 ## Kubernetes tools
 1. Now we need to install all the Kubernetes tools including:
