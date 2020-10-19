@@ -55,8 +55,8 @@ Verify that it gives you back a hostname different than the node you're on (shou
 - Kubeadm - Installation utility
 - Kubelet - The heavy-lifting component of the Kubernetes runtime
 - Kubectl - The CLI tool
-2. Install the Kubernetes repo on each node (https://kubernetes.io/docs/setup/production-environment/tools/kubeadm/install-kubeadm/)
-- Run this on EVERY node:
+2. Install the Kubernetes repo on **each** node (https://kubernetes.io/docs/setup/production-environment/tools/kubeadm/install-kubeadm/)
+- Run this on **EVERY** node:
 ```
 cat <<EOF | sudo tee /etc/yum.repos.d/kubernetes.repo
 [kubernetes]
