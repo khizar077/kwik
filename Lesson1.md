@@ -13,7 +13,7 @@ I like to do a couple other things just to make sure that the environment is hos
 1. Turn off SELinux (required)
 - Edit `/etc/selinux/config` (change PERMISSIVE to disable)
 2. Remove swap mount (required)
-- Either run `swapoff` or by removing / commenting out the mount in `/etc/fstab` (and rebooting)
+- Either run `swapoff -a` or by removing / commenting out the mount in `/etc/fstab` (and rebooting)
 3. Install EPEL and open-vm-tools package (required in VMs)
 ``` 
 yum install epel-release -y
@@ -74,11 +74,11 @@ sudo sed -i 's/^SELINUX=enforcing$/SELINUX=permissive/' /etc/selinux/config
 sudo yum install -y kubelet-1.17.12-0 kubeadm-1.17.12-0 kubectl-1.17.12-0 --disableexcludes=kubernetes
 sudo systemctl enable --now kubelet
 ```
-- Note above that a specific version of Kubernetes is specified (1.17.12). You can use whichever version your like (omit any version for the latest/greatest). However, you should try and use a version that has broad support so the subsequent steps are likley to work as-is.
+Note above that a specific version of Kubernetes is specified (1.17.12). You can use whichever version your like (omit any version for the latest/greatest). However, you should try and use a version that has broad support so the subsequent steps are likley to work as-is.
 
 ## Initialize your Kubernetes cluster
 1. On the **master** only:
-`kubeadm init --pod-network-cidr=192.168.0.0/16`
+`kubeadm init --pod-network-cidr=192.169.0.0/16`
 2. Copy the credentials to the cluster to your home directory so you can start interacting with the cluster:
 ```
 mkdir -p $HOME/.kube
@@ -109,6 +109,7 @@ kube01.poc.csc   Ready    master   9m23s   v1.17.12
 kube02.poc.csc   Ready    <none>   116s    v1.17.12
 kube03.poc.csc   Ready    <none>   116s    v1.17.12
 kube04.poc.csc   Ready    <none>   117s    v1.17.12
+```
 
 ## Setup a Loadbalancer (MetalLB)
 Now we need to be able to setup a workload to start serving our users. First we need to install something that can act as a LoadBalancer to all the containers we surface out of our cluster.
