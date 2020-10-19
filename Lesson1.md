@@ -78,7 +78,7 @@ Note above that a specific version of Kubernetes is specified (1.17.12). You can
 
 ## Initialize your Kubernetes cluster
 1. On the **master** only:
-`kubeadm init --pod-network-cidr=192.169.0.0/16`
+`kubeadm init --pod-network-cidr=192.168.0.0/16`
 2. Copy the credentials to the cluster to your home directory so you can start interacting with the cluster:
 ```
 mkdir -p $HOME/.kube
@@ -93,7 +93,8 @@ sudo chown $(id -u):$(id -g) $HOME/.kube/config
 ## Network Overlay
 This serves to unite Kubernetes nodes in an overlay allowing containers on each host to talk not just to themselves, but to each other.
 1. Install Calico (https://docs.projectcalico.org/getting-started/kubernetes/quickstart)
-```kubectl create -f https://docs.projectcalico.org/manifests/tigera-operator.yaml
+```
+kubectl create -f https://docs.projectcalico.org/manifests/tigera-operator.yaml
 kubectl create -f https://docs.projectcalico.org/manifests/custom-resources.yaml
 ```
 2. Check to make sure Calico comes online (3 services all have 1/1 containers running)
@@ -115,7 +116,9 @@ kube04.poc.csc   Ready    <none>   117s    v1.17.12
 Now we need to be able to setup a workload to start serving our users. First we need to install something that can act as a LoadBalancer to all the containers we surface out of our cluster.
 ### Network Loadbalancer
 1. Install Metallb: https://metallb.universe.tf/installation/
-`kubectl edit configmap -n kube-system kube-proxy`
+```
+kubectl edit configmap -n kube-system kube-proxy
+```
 - Change the line about strictARP to true
 - Exit with :wq
 - Run the below:
@@ -147,7 +150,11 @@ data:
 
 ## Test a Real Workload
 Now that we have a working Kubernetes cluster along with a kubernetes LoadBalancer, lets run a demo application:
-1. kubectl create -f https://github.com/mreferre/yelb/raw/master/deployments/platformdeployment/Kubernetes/yaml/yelb-k8s-loadbalancer.yaml
+1. Install the YELB demo app:
+```
+kubectl create -f https://github.com/mreferre/yelb/raw/master/deployments/platformdeployment/Kubernetes/yaml/yelb-k8s-loadbalancer.yaml
+```
+- It may take a few monments for all the containers to start for the individual services.
 2. Check what IP your loadbalancer has given the yelb-ui service:
 `kubectl get svc`
 The output should look similar to:
@@ -163,4 +170,4 @@ yelb-ui          LoadBalancer   10.106.219.33   172.16.200.1   80:30506/TCP   11
 3. Hit that IP with a web browser to see if things worked!
 
 ## Next Steps
-In the next KWiK lesson, we'll take this a couple steps further by adding in two kinds of storage services (NFS and Software-defined). After that, expect us to start going into the VMware Tanzu Kubernetes tools as well as a separate track focused around USING kubernetes with specific workloads (create an application, use data analytics tools, and more). 
+Now you can start to play around. You can download Helm and start adding in applications. The world is yours to discover. In the next KWiK lesson, we'll take this a couple steps further by adding in two kinds of storage services (NFS and Software-defined). After that, expect us to start going into the VMware Tanzu Kubernetes tools as well as a separate track focused around USING kubernetes with specific workloads (create an application, use data analytics tools, and more). 
