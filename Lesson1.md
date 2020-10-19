@@ -76,7 +76,7 @@ sudo systemctl enable --now kubelet
 ```
 - Note above that a specific version of Kubernetes is specified (1.17.12). You can use whichever version your like (omit any version for the latest/greatest). However, you should try and use a version that has broad support so the subsequent steps are likley to work as-is.
 
-##Initialize your Kubernetes cluster
+## Initialize your Kubernetes cluster
 1. On the **master** only:
 `kubeadm init --pod-network-cidr=192.168.0.0/16`
 2. Copy the credentials to the cluster to your home directory so you can start interacting with the cluster:
@@ -90,7 +90,7 @@ sudo chown $(id -u):$(id -g) $HOME/.kube/config
 - You should see your 1 master with a status of ready (may take a minute or two)
 4. Copy your "join" string from the console to notepad (so we can use it to join the worker nodes to the cluster once the network overlay is installed)
 	
-##Network Overlay
+## Network Overlay
 This serves to unite Kubernetes nodes in an overlay allowing containers on each host to talk not just to themselves, but to each other.
 1. Install Calico (https://docs.projectcalico.org/getting-started/kubernetes/quickstart)
 ```kubectl create -f https://docs.projectcalico.org/manifests/tigera-operator.yaml
@@ -144,7 +144,7 @@ data:
 3. Add the configuration we created above into kubernetes:
 `kubectl create -f metallb.yaml`
 
-##Test a Real Workload
+## Test a Real Workload
 Now that we have a working Kubernetes cluster along with a kubernetes LoadBalancer, lets run a demo application:
 1. kubectl create -f https://github.com/mreferre/yelb/raw/master/deployments/platformdeployment/Kubernetes/yaml/yelb-k8s-loadbalancer.yaml
 2. Check what IP your loadbalancer has given the yelb-ui service:
@@ -161,5 +161,5 @@ yelb-ui          LoadBalancer   10.106.219.33   172.16.200.1   80:30506/TCP   11
 ```
 3. Hit that IP with a web browser to see if things worked!
 
-##Next Steps
+## Next Steps
 In the next KWiK lesson, we'll take this a couple steps further by adding in two kinds of storage services (NFS and Software-defined). After that, expect us to start going into the VMware Tanzu Kubernetes tools as well as a separate track focused around USING kubernetes with specific workloads (create an application, use data analytics tools, and more). 
