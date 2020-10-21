@@ -88,7 +88,11 @@ sudo chown $(id -u):$(id -g) $HOME/.kube/config
 3. Test
 `kubectl get nodes`
 - You should see your 1 master with a status of ready (may take a minute or two)
-4. Copy your "join" string from the console to notepad (so we can use it to join the worker nodes to the cluster once the network overlay is installed)
+4. Copy your "join" string from the console to notepad (so we can use it to join the worker nodes to the cluster once the network overlay is installed). It should look something like:
+```
+kubeadm join 172.28.115.148:6443 --token 86xvi5.fmeoeliutpa3ygnc \
+    --discovery-token-ca-cert-hash sha256:778e148b0a8b4a1f10e17268249272f0efe11cb4da8174aab91d7666aee5bdfb
+```
 	
 ## Network Overlay
 This serves to unite Kubernetes nodes in an overlay allowing containers on each host to talk not just to themselves, but to each other.
