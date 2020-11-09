@@ -73,6 +73,12 @@ sudo setenforce 0
 sudo sed -i 's/^SELINUX=enforcing$/SELINUX=permissive/' /etc/selinux/config
 sudo yum install -y kubelet-1.17.12-0 kubeadm-1.17.12-0 kubectl-1.17.12-0 --disableexcludes=kubernetes
 sudo systemctl enable --now kubelet
+
+cat <<EOF | sudo tee /etc/sysctl.d/k8s.conf
+net.bridge.bridge-nf-call-ip6tables = 1
+net.bridge.bridge-nf-call-iptables = 1
+EOF
+sudo sysctl --system
 ```
 Note above that a specific version of Kubernetes is specified (1.17.12). You can use whichever version your like (omit any version for the latest/greatest). However, you should try and use a version that has broad support so the subsequent steps are likley to work as-is.
 
