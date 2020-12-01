@@ -93,7 +93,7 @@ sudo chown $(id -u):$(id -g) $HOME/.kube/config
 ```
 3. Test
 `kubectl get nodes`
-- You should see your 1 master with a status of ready (may take a minute or two)
+- You should see your 1 master with a status of NOT ready (we need to install the network overlay)
 4. Copy your "join" string from the console to notepad (so we can use it to join the worker nodes to the cluster once the network overlay is installed). It should look something like:
 ```
 kubeadm join 172.28.115.148:6443 --token 86xvi5.fmeoeliutpa3ygnc \
